@@ -3,7 +3,7 @@ name: Helm Release Workflow
 on:
   push:
     branches:
-      - mainxx
+      - master
   workflow_dispatch:
 
 jobs:
