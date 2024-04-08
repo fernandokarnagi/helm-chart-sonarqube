@@ -581,5 +581,3 @@ extraConfig:
 #   sonarWebContext: /
 
 terminationGracePeriodSeconds: 60
-
-namespace: fksq
