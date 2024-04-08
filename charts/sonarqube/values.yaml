@@ -61,8 +61,8 @@ elasticsearch:
 
 service:
   type: ClusterIP
-  externalPort: 9000
-  internalPort: 9000
+  externalPort: 9100
+  internalPort: 9100
   labels:
   annotations: {}
   # May be used in example for internal load balancing in GCP:
@@ -95,7 +95,7 @@ ingress:
   enabled: false
   # Used to create an Ingress record.
   hosts:
-    - name: sonarqube.your-org.com
+    - name: sonar.devops2.karnagi.monster
       # Different clouds or configurations might need /* as the default path
       # path: /
       # For additional control over serviceName and servicePort
@@ -109,7 +109,7 @@ ingress:
   # Set the ingressClassName on the ingress record
   # ingressClassName: nginx
 
-# Additional labels for Ingress manifest file
+  # Additional labels for Ingress manifest file
   # labels:
   #  traffic-type: external
   #  traffic-type: internal
@@ -367,7 +367,7 @@ annotations: {}
 resources:
   limits:
     cpu: 800m
-    memory: 6144M
+    memory: 4096M
     ephemeral-storage: 512000M
   requests:
     cpu: 400m
@@ -401,7 +401,8 @@ persistence:
   mounts: []
 
 # In case you want to specify different resources for emptyDir than {}
-emptyDir: {}
+emptyDir:
+  {}
   # Example of resouces that might be used:
   # medium: Memory
   # sizeLimit: 16Mi

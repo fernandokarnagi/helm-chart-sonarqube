@@ -1,70 +1,36 @@
-on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: "Version of the release"
-        required: true
-      buildNumber:
-        description: "Build number of the release"
-        required: true
+name: Helm Release Workflow
 
-name: Release
+on:
+  push:
+    branches:
+      - mainxx
+  workflow_dispatch:
 
 jobs:
-  release:
+  helm-release:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: write
+    name: Release Helm Chart
     steps:
-      - id: secrets
-        uses: SonarSource/vault-action-wrapper@2.4.3-1
-        with:
-          secrets: |
-            development/artifactory/token/{REPO_OWNER_NAME_DASH}-promoter access_token | artifactory_access_token;
-            development/kv/data/slack webhook | slack_webhook_url;
-      - uses: SonarSource/jfrog-setup-wrapper@3.0.0-1
-        with:
-          jfrogAccessToken: ${{ fromJSON(steps.secrets.outputs.vault).artifactory_access_token }}
       - name: Checkout
-        uses: actions/checkout@v3
-      - name: Fetch history
-        run: git fetch --prune --unshallow
-      - name: Promote
-        run: jfrog rt build-promote --status released "${{ github.event.repository.name }}" "${{ github.event.inputs.buildNumber }}" sonarsource-helm-releases
-      - name: Create local repository directory
-        id: local_repo
-        run: echo "dir=$(mktemp -d repo.XXXXXXXX)" >> "$GITHUB_OUTPUT"
-      - uses: SonarSource/gh-action_release/download-build@v5
+        uses: actions/checkout@v2
         with:
-          local-repo-dir: ${{ steps.local_repo.outputs.dir }}
-          remote-repo: sonarsource-helm
-          build-number: ${{ github.event.inputs.buildNumber }}
-      - name: Upload binaries to release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file_glob: true
-          file: ${{ steps.local_repo.outputs.dir }}/*
-          tag: ${{ github.event.inputs.version }}
-          overwrite: true
+          fetch-depth: 0
+
       - name: Configure Git
         run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      - name: Release to GitHub
-        uses: ./.github/actions/helm-index
+          git config --global user.name "$GITHUB_ACTOR"
+          git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Install Helm
+        uses: azure/setup-helm@v1
+
+      #   - name: Add Helm Repo dependencies
+      #     run: helm repo add bitnami https://charts.bitnami.com/bitnami
+
+      - name: Run User chart-releaser
+        uses: helm/chart-releaser-action@v1.2.1
         env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          CR_TOKEN: "${{ secrets.REPO_TOKEN }}"
+          CR_SKIP_EXISTING: true
         with:
-          repository-name: "${{ github.event.repository.name }}"
-          package-path: ${{ steps.local_repo.outputs.dir }}
-          release-name: "${{ github.event.inputs.version}}"
-      - name: Notify failures on Slack
-        if: failure()
-        uses: Ilshidur/action-slack@2.0.0
-        env:
-          SLACK_WEBHOOK: ${{ fromJSON(steps.secrets.outputs.vault).slack_webhook_url }}
-          SLACK_CHANNEL: team-sonarqube-build
-        with:
-          args: "Helm Chart Release failed, see the logs at https://github.com/SonarSource/helm-chart-sonarqube/actions"
+          charts_dir: charts
