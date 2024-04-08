@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: {{ template "sonarqube.fullname" . }}
+  namespace: {{ .Values.namespace }}
   labels:
     app: {{ template "sonarqube.name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}

@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ template "sonarqube.fullname" . }}-init-sysctl
+  namespace: {{ .Values.namespace }}
   labels:
     app: {{ template "sonarqube.name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
