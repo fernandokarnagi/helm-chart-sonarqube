@@ -3,6 +3,31 @@ entries:
   sonarqube:
   - apiVersion: v2
     appVersion: 10.4.0
+    created: "2024-04-08T12:29:38.257137096Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://raw.githubusercontent.com/bitnami/charts/pre-2022/bitnami
+      version: 10.15.0
+    - condition: nginx.enabled
+      name: ingress-nginx
+      repository: https://kubernetes.github.io/ingress-nginx
+      version: 4.9.1
+    description: SonarQube is a self-managed, automatic code review tool that systematically
+      helps you deliver clean code. As a core element of our Sonar solution, SonarQube
+      integrates into your existing workflow and detects issues in your code to help
+      you perform continuous code inspections of your projects. The tool analyses
+      30+ different programming languages and integrates into your CI pipeline and
+      DevOps platform to ensure that your code meets high-quality standards.
+    digest: 8762138d37e630f5d815ac299d610c8b3381ab73f38feb935b125f677a0c4774
+    kubeVersion: '>= 1.24.0-0'
+    name: sonarqube
+    type: application
+    urls:
+    - https://github.com/fernandokarnagi/helm-chart-sonarqube/releases/download/sonarqube-10.5.4/sonarqube-10.5.4.tgz
+    version: 10.5.4
+  - apiVersion: v2
+    appVersion: 10.4.0
     created: "2024-04-08T09:39:47.442034103Z"
     dependencies:
     - condition: postgresql.enabled
@@ -101,4 +126,4 @@ entries:
     urls:
     - https://github.com/fernandokarnagi/helm-chart-sonarqube/releases/download/sonarqube-10.5.0/sonarqube-10.5.0.tgz
     version: 10.5.0
-generated: "2024-04-08T09:39:47.442049802Z"
+generated: "2024-04-08T12:29:38.257162964Z"
