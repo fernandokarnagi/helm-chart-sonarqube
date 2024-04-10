@@ -31,7 +31,7 @@ jobs:
         id: step2
         run: |
           echo "Running Sonar scan .. "
-          run: echo "sonarresult=ok" >> $GITHUB_OUTPUT
+          echo "sonarresult=ok" >> $GITHUB_OUTPUT
 
   owasp:
     runs-on: self-hosted
@@ -46,4 +46,4 @@ jobs:
         id: step2
         run: |
           echo "Running OWASP scan .. "
-          run: echo "owaspresult=notok" >> $GITHUB_OUTPUT
+          echo "owaspresult=notok" >> $GITHUB_OUTPUT
