@@ -46,7 +46,10 @@ jobs:
   #         env
 
   helm-release:
-    runs-on: self-hosted
+    # runs-on: self-hosted
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
     name: Release Helm Chart
     needs: [build, scan]
     steps:
@@ -64,21 +67,20 @@ jobs:
           git config --global user.name "$GITHUB_ACTOR"
           git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - name: Install Helm
-        uses: azure/setup-helm@v4
+      # - name: Install Helm
+      #   uses: azure/setup-helm@v4
 
       # - name: Add Helm Repo dependencies
       #   run: |
       #     helm init
       #     helm repo add bitnami https://charts.bitnami.com/bitnami
 
-      # - name: Run User chart-releaser
-      #   uses: helm/chart-releaser-action@v1
-      #   env:
-      #     CR_TOKEN: "${{ secrets.REPO_TOKEN }}"
-      #     CR_SKIP_EXISTING: true
-      #   with:
-      #     charts_dir: charts
+      - name: Run User chart-releaser
+        uses: helm/chart-releaser-action@v1.6.0
+        env:
+          CR_TOKEN: "${{ secrets.ANOTHER_REPO_TOKEN }}"
+        with:
+          charts_dir: charts
 
   post-build:
     runs-on: self-hosted
