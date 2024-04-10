@@ -367,11 +367,11 @@ annotations: {}
 resources:
   limits:
     cpu: 800m
-    memory: 4096M
+    memory: 2048M
     ephemeral-storage: 512000M
   requests:
     cpu: 400m
-    memory: 2048M
+    memory: 1024M
     ephemeral-storage: 1536M
 
 persistence:
@@ -391,7 +391,7 @@ persistence:
   ##
   storageClass:
   accessMode: ReadWriteOnce
-  size: 5Gi
+  size: 1Gi
   uid: 1000
   guid: 0
 
@@ -467,8 +467,8 @@ postgresql:
     port: 5432
   resources:
     limits:
-      cpu: 2
-      memory: 2Gi
+      cpu: 1
+      memory: 1Gi
     requests:
       cpu: 100m
       memory: 200Mi
