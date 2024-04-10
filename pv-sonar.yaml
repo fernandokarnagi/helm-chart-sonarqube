@@ -8,7 +8,6 @@ spec:
     - ReadWriteOnce
   capacity:
     storage: 1Gi
-  storageClassName: standard
+  storageClassName: sonar
   hostPath:
     path: /pv/sonar
-

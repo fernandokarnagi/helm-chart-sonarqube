@@ -8,7 +8,6 @@ spec:
     - ReadWriteOnce
   capacity:
     storage: 1Gi
-  storageClassName: standard
+  storageClassName: postgresql
   hostPath:
     path: /pv/postgresql
-
