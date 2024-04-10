@@ -1,0 +1,1 @@
+helm delete fernandosonarqube -n fksq
