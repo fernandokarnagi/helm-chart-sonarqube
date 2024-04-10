@@ -60,9 +60,10 @@ elasticsearch:
   bootstrapChecks: true
 
 service:
-  type: ClusterIP
-  externalPort: 9100
-  internalPort: 9100
+  type: NodePort
+  externalPort: 9001
+  internalPort: 9001
+  nodePort: 9001
   labels:
   annotations: {}
   # May be used in example for internal load balancing in GCP:
@@ -367,11 +368,11 @@ annotations: {}
 resources:
   limits:
     cpu: 800m
-    memory: 2048M
+    memory: 4096M
     ephemeral-storage: 512000M
   requests:
     cpu: 400m
-    memory: 1024M
+    memory: 2048M
     ephemeral-storage: 1536M
 
 persistence:
