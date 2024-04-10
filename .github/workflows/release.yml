@@ -27,11 +27,15 @@ jobs:
   scan-sca:
     runs-on: self-hosted
     name: SCA
+    env:
+      BUILD_PARAM1: "build param 1"
+      BUILD_PARAM2: "build param 1"
     needs: [build]
     steps:
       - name: SCA
         run: |
           echo "SCA ... "
+          env
 
   helm-release:
     runs-on: self-hosted
@@ -52,7 +56,9 @@ jobs:
         uses: azure/setup-helm@v1
 
       - name: Add Helm Repo dependencies
-        run: helm repo add bitnami https://charts.bitnami.com/bitnami
+        run: |
+          helm init
+          helm repo add bitnami https://charts.bitnami.com/bitnami
 
       - name: Run User chart-releaser
         uses: helm/chart-releaser-action@v1.2.1
