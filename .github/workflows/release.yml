@@ -51,7 +51,7 @@ jobs:
     needs: [build, scan]
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -65,7 +65,7 @@ jobs:
           git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: Install Helm
-        uses: azure/setup-helm@v1
+        uses: azure/setup-helm@v4
 
       # - name: Add Helm Repo dependencies
       #   run: |
@@ -73,7 +73,7 @@ jobs:
       #     helm repo add bitnami https://charts.bitnami.com/bitnami
 
       - name: Run User chart-releaser
-        uses: helm/chart-releaser-action@v1.2.1
+        uses: helm/chart-releaser-action@v1
         env:
           CR_TOKEN: "${{ secrets.REPO_TOKEN }}"
           CR_SKIP_EXISTING: true

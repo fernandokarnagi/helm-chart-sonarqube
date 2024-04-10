@@ -375,7 +375,7 @@ resources:
     ephemeral-storage: 1536M
 
 persistence:
-  enabled: false
+  enabled: true
   ## Set annotations on pvc
   annotations: {}
 
@@ -475,8 +475,8 @@ postgresql:
   persistence:
     enabled: true
     accessMode: ReadWriteOnce
-    size: 20Gi
-    storageClass:
+    size: 1Gi
+    storageClass: postgresql
   securityContext:
     # For standard Kubernetes deployment, set enabled=true
     # If using OpenShift, enabled=false for restricted SCC and enabled=true for anyuid/nonroot SCC
