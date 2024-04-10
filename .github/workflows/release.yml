@@ -72,13 +72,13 @@ jobs:
       #     helm init
       #     helm repo add bitnami https://charts.bitnami.com/bitnami
 
-      - name: Run User chart-releaser
-        uses: helm/chart-releaser-action@v1
-        env:
-          CR_TOKEN: "${{ secrets.REPO_TOKEN }}"
-          CR_SKIP_EXISTING: true
-        with:
-          charts_dir: charts
+      # - name: Run User chart-releaser
+      #   uses: helm/chart-releaser-action@v1
+      #   env:
+      #     CR_TOKEN: "${{ secrets.REPO_TOKEN }}"
+      #     CR_SKIP_EXISTING: true
+      #   with:
+      #     charts_dir: charts
 
   post-build:
     runs-on: self-hosted

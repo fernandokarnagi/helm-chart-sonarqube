@@ -1,0 +1,16 @@
+name: Deployment Workflow
+
+on:
+  workflow_run:
+    workflows: ["Helm Release Workflow"]
+    types: completed
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    name: "Deployment"
+    steps:
+      - name: "Deploying to DEV"
+        id: deployToDev
+        run: |
+          echo "Deploying to DEV .. "
