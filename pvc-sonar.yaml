@@ -4,7 +4,7 @@ metadata:
   name: sonar-pvc
   namespace: fksq
 spec:
-  storageClassName: standard
+  storageClassName: sonar
   accessModes:
     - ReadWriteOnce
   resources:
