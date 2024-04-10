@@ -8,7 +8,7 @@ kubeVersion: ">= 1.24.0-0"
 dependencies:
   - name: postgresql
     version: 10.15.0
-    repository: https://raw.githubusercontent.com/bitnami/charts/pre-2022/bitnami
+    repository: https://charts.bitnami.com/bitnami
     condition: postgresql.enabled
   - name: ingress-nginx
     version: 4.9.1
