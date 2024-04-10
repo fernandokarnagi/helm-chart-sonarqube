@@ -22,7 +22,7 @@ jobs:
           git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: Install Helm
-        uses: azure/setup-helm@v4
+        uses: azure/setup-helm@v1
 
       - name: Add Helm Repo dependencies
         run: helm repo add bitnami https://charts.bitnami.com/bitnami
