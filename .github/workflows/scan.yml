@@ -1,0 +1,49 @@
+name: Scan Workflow
+
+on:
+  workflow_call:
+    inputs:
+      sonar_token:
+        required: true
+        type: string
+      owasp_key:
+        required: true
+        type: string
+    outputs:
+      owaspresult:
+        description: "OWASP Result"
+        value: ${{ jobs.owasp.outputs.owaspresult }}
+      sonarresult:
+        description: "Sonar Result"
+        value: ${{ jobs.sonar.outputs.sonarresult }}
+
+jobs:
+  sonar:
+    runs-on: self-hosted
+    outputs:
+      sonarresult: ${{ steps.step2.outputs.sonarresult }}
+    steps:
+      - name: Prepare SonarQube properties
+        id: step1
+        run: |
+          echo "Preparing SonarQube properties .. "
+      - name: Run Sonar scan
+        id: step2
+        run: |
+          echo "Running Sonar scan .. "
+          run: echo "sonarresult=ok" >> $GITHUB_OUTPUT
+
+  owasp:
+    runs-on: self-hosted
+    outputs:
+      owaspresult: ${{ steps.step2.outputs.owaspresult }}
+    steps:
+      - name: Prepare OWASP properties
+        id: step1
+        run: |
+          echo "Preparing OWASP properties .. "
+      - name: Run OWASP scan
+        id: step2
+        run: |
+          echo "Running OWASP scan .. "
+          run: echo "owaspresult=notok" >> $GITHUB_OUTPUT

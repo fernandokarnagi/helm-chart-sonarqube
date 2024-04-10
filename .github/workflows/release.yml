@@ -15,37 +15,49 @@ jobs:
         run: |
           echo "Build ... "
 
-  scan-sast:
-    runs-on: self-hosted
-    name: SAST
+  scan:
+    uses: ./.github/workflows/scan.yml
+    name: Scan
     needs: [build]
-    steps:
-      - name: SAST
-        run: |
-          echo "SAST ... "
+    with:
+      owasp_key: "owasp-123"
+      sonar_token: "sonar-123"
 
-  scan-sca:
-    runs-on: self-hosted
-    name: SCA
-    env:
-      BUILD_PARAM1: "build param 1"
-      BUILD_PARAM2: "build param 1"
-    needs: [build]
-    steps:
-      - name: SCA
-        run: |
-          echo "SCA ... "
-          env
+  # scan-sast:
+  #   runs-on: self-hosted
+  #   name: SAST
+  #   needs: [build]
+  #   steps:
+  #     - name: SAST
+  #       run: |
+  #         echo "SAST ... "
+
+  # scan-sca:
+  #   runs-on: self-hosted
+  #   name: SCA
+  #   env:
+  #     BUILD_PARAM1: "build param 1
+  #     BUILD_PARAM2: "build param 1"
+  #   needs: [build]
+  #   steps:
+  #     - name: SCA
+  #       run: |
+  #         echo "SCA ... "
+  #         env
 
   helm-release:
     runs-on: self-hosted
     name: Release Helm Chart
-    needs: [build, scan-sast, scan-sca]
+    needs: [build, scan]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+
+      - name: Print Scan Result
+        run: |
+          echo "${{ needs.scan.outputs.owaspresult }} ~ ${{ needs.scan.outputs.sonarresult }}"
 
       - name: Configure Git
         run: |
