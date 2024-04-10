@@ -7,9 +7,36 @@ on:
   workflow_dispatch:
 
 jobs:
+  build:
+    runs-on: self-hosted
+    name: Build
+    steps:
+      - name: Build
+        run: |
+          echo "Build ... "
+
+  scan-sast:
+    runs-on: self-hosted
+    name: SAST
+    needs: [build]
+    steps:
+      - name: SAST
+        run: |
+          echo "SAST ... "
+
+  scan-sca:
+    runs-on: self-hosted
+    name: SCA
+    needs: [build]
+    steps:
+      - name: SCA
+        run: |
+          echo "SCA ... "
+
   helm-release:
     runs-on: self-hosted
     name: Release Helm Chart
+    needs: [build, scan-sast, scan-sca]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -34,3 +61,12 @@ jobs:
           CR_SKIP_EXISTING: true
         with:
           charts_dir: charts
+
+  post-build:
+    runs-on: self-hosted
+    name: Post Build
+    needs: [helm-release]
+    steps:
+      - name: Post Build
+        run: |
+          echo "Post build ... "
