@@ -411,8 +411,8 @@ emptyDir:
 # A custom sonar.properties file can be provided via dictionary.
 # For example:
 sonarProperties:
-    sonar.web.javaOpts: "-Xmx1024m -Xms512m"
-    sonar.ce.javaOpts: "-Xmx1024m -Xms512m"
+  sonar.web.javaOpts: "-Xmx2048m -Xms512m"
+  sonar.ce.javaOpts: "-Xmx3072m -Xms512m"
 #   sonar.forceAuthentication: true
 #   sonar.security.realm: LDAP
 #   ldap.url: ldaps://organization.com

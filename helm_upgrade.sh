@@ -1,0 +1,1 @@
+helm upgrade fernandosonarqube fernandosonarqube/sonarqube  -n fksq  -f charts/sonarqube/values.yaml
