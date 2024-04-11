@@ -61,9 +61,9 @@ elasticsearch:
 
 service:
   type: NodePort
-  externalPort: 9001
-  internalPort: 9001
-  nodePort: 9001
+  externalPort: 9000
+  internalPort: 9000
+  nodePort: 30001
   labels:
   annotations: {}
   # May be used in example for internal load balancing in GCP:
@@ -410,7 +410,9 @@ emptyDir:
 
 # A custom sonar.properties file can be provided via dictionary.
 # For example:
-# sonarProperties:
+sonarProperties:
+    sonar.web.javaOpts: "-Xmx1024m -Xms512m"
+    sonar.ce.javaOpts: "-Xmx1024m -Xms512m"
 #   sonar.forceAuthentication: true
 #   sonar.security.realm: LDAP
 #   ldap.url: ldaps://organization.com
@@ -469,7 +471,7 @@ postgresql:
   resources:
     limits:
       cpu: 1
-      memory: 1Gi
+      memory: 2Gi
     requests:
       cpu: 100m
       memory: 200Mi
