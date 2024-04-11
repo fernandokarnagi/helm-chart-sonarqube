@@ -1,0 +1,1 @@
+helm -n fksq get all fernandosonarqube
